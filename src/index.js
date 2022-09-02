@@ -1,5 +1,10 @@
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 let contract = require("@truffle/contract");
+const ProviderEngine = require('web3-provider-engine')
+const RpcSubprovider = require('web3-provider-engine/subproviders/rpc')
+const createLedgerSubprovider = require('@ledgerhq/web3-subprovider')
+const LedgerWalletProvider = require('./ledger');
+
 
 function Web4() {
   let provider;
@@ -39,6 +44,46 @@ function Web4() {
 
     // stop polling for blocks
     provider.engine.stop();
+  }
+  // this.setLedgerWalletProvider = function (
+  //   transport,
+  //   providerOrUrl,
+  //   addressIndex = 0,
+  //   numberOfAddresses = 1,
+  //   networkId,
+  //   shareNonce = true,
+  //   derivationPath = "m/44'/60'/0'/0/",
+  //   pollingInterval = 600000
+  // ) {
+  //   const engine = new ProviderEngine()
+  //   const ledger = createLedgerSubprovider(transport, {
+  //     networkId,
+  //     accountsLength: numberOfAddresses
+  //   })
+  //   engine.addProvider(ledger)
+  //   engine.addProvider(new RpcSubprovider({ rpcUrl: providerOrUrl }))]
+  //   provider = engine;
+  // }
+
+  this.setLedgerWalletProvider = function (
+    transport,
+    providerOrUrl,
+    addressIndex = 0,
+    numberOfAddresses = 1,
+    networkId,
+    derivationPath = "m/44'/60'/0'/0/",
+  ) {
+
+    const ledgerOptions = {
+      networkId, // mainnet
+      path: derivationPath, // ledger default derivation path
+      askConfirm: false,
+      accountsLength: numberOfAddresses,
+      accountsOffset: 0
+    };
+
+    provider = new LedgerWalletProvider(ledgerOptions, providerOrUrl);
+    provider.stop();
   }
 
   // create smart contract abstraction object by ABI
