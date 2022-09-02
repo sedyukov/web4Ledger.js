@@ -17,14 +17,16 @@ const createLedgerSubprovider = require('@ledgerhq/web3-subprovider').default
  */
 
 module.exports = class LedgerProvider extends ProviderEngine {
-  constructor(options, url, debug) {
+  constructor(options, url, debug, transportType) {
     super()
 
     this.addProvider(createLedgerSubprovider(async () => {
-      const transport = await TransportU2F.create()
-
-      transport.setDebugMode(!!debug)
-
+      let transport;
+      if (transportType === 'usb') {
+        transport = await TransportWebUSB.create()
+      } else {
+        transport = await TransportU2F.create()
+      }
       return transport
     }, options))
     this.addProvider(new FiltersSubprovider())

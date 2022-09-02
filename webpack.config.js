@@ -1,10 +1,17 @@
 const path = require('path');
-
+const webpack = require('webpack')
 module.exports = {
   context: path.resolve(__dirname, 'src'),
   entry: {
     'web4-browser': ['@babel/polyfill', './index.js'],
   },
+  plugins: [
+    new webpack.IgnorePlugin(/^\.\/wordlists\/(?!english)/, /bip39\/src$/),
+    new webpack.NormalModuleReplacementPlugin(
+      /@ledgerhq\/devices\/hid-framing/,
+      '@ledgerhq/devices/lib/hid-framing'
+    ),
+  ],
   output: {
     filename: `[name].js`,
     path: path.resolve(__dirname, 'dist'),

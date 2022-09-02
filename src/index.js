@@ -6,7 +6,7 @@ const createLedgerSubprovider = require('@ledgerhq/web3-subprovider')
 const LedgerWalletProvider = require('./ledger');
 
 
-function Web4() {
+function Web4Ledger() {
   let provider;
   let defaultAddress = "";
   let privateKey = "";
@@ -66,8 +66,9 @@ function Web4() {
   // }
 
   this.setLedgerWalletProvider = function (
-    transport,
-    providerOrUrl,
+    transportType,
+    url,
+    emvAddress,
     addressIndex = 0,
     numberOfAddresses = 1,
     networkId,
@@ -75,15 +76,16 @@ function Web4() {
   ) {
 
     const ledgerOptions = {
-      networkId, // mainnet
+      networkId,
       path: derivationPath, // ledger default derivation path
       askConfirm: false,
       accountsLength: numberOfAddresses,
       accountsOffset: 0
     };
-
-    provider = new LedgerWalletProvider(ledgerOptions, providerOrUrl);
+    provider = new LedgerWalletProvider(ledgerOptions, url, transportType);
     provider.stop();
+    provider.getAddress();
+    defaultAddress = emvAddress;
   }
 
   // create smart contract abstraction object by ABI
@@ -130,5 +132,5 @@ function Web4() {
 
 };
 
-module.exports = Web4;
+module.exports = Web4Ledger;
 

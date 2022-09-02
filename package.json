@@ -16,10 +16,6 @@
     "test": "node test/test.js",
     "build:web": "webpack"
   },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:CryptonStudio/web4.js.git"
-  },
   "homepage": "https://github.com/CryptonStudio/web4.js",
   "bugs": {
     "url": "https://github.com/CryptonStudio/web4.js/issues"
@@ -27,10 +23,14 @@
   "author": "cryptonteam <info@crypton.studio>",
   "license": "MIT",
   "dependencies": {
+    "@ledgerhq/hw-transport-node-hid": "^6.27.2",
+    "@ledgerhq/hw-transport-webusb": "^6.27.2",
+    "@ledgerhq/web3-subprovider": "^5.36.0-deprecated",
     "@truffle/abi-utils": "^0.2.3",
     "@truffle/contract": "^4.3.29",
     "@truffle/hdwallet-provider": "^1.4.3",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "truffle-ledger-provider": "^1.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -39,6 +39,7 @@
     "@babel/preset-env": "^7.8.4",
     "babel-loader": "^8.0.6",
     "web3": "^1.3.0",
+    "web3-provider-engine": "^16.0.4",
     "webpack": "^4.41.5",
     "webpack-cli": "^4.2.0"
   }
