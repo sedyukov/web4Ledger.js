@@ -24,6 +24,8 @@ module.exports = class LedgerProvider extends ProviderEngine {
       let transport;
       if (transportType === 'usb') {
         transport = await TransportWebUSB.create()
+      } else if (transportType === 'emulator') {
+        transport = await TransportU2F.create()
       } else {
         transport = await TransportU2F.create()
       }

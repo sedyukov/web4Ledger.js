@@ -84,7 +84,6 @@ function Web4Ledger() {
     };
     provider = new LedgerWalletProvider(ledgerOptions, url, transportType);
     provider.stop();
-    provider.getAddress();
     defaultAddress = emvAddress;
   }
 
